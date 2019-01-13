@@ -9,10 +9,7 @@
 #include "generic_tracer.hpp"
 #include "graph.hpp"
 
-#include <chrono>
-#include <list>
 #include <optional>
-#include <utility>
 
 template <typename G>
 auto
@@ -21,10 +18,8 @@ search(const G &g, CU cu, int src, int dst, int ncu)
   assert(ncu > 0);
   assert(src != dst);
 
-  using tp_t = std::chrono::time_point<std::chrono::high_resolution_clock>;
-  tp_t t0 = std::chrono::system_clock::now();
-
-  // The maximal length of a path.
+  // The maximal length of a path.  We don't set it, so it's
+  // unlimited.
   static std::optional<COST> ml;
 
   // The solution type.
@@ -40,25 +35,8 @@ search(const G &g, CU cu, int src, int dst, int ncu)
   dijkstra(g, S, Q, l, c, dst);
   // The tracer.
   generic_tracer<graph, cupath, sol_type, CU> t(g, ncu);
-  // Get the path.
-  auto op = trace(S, dst, l, t);
-
-  tp_t t1 = std::chrono::system_clock::now();
-  std::chrono::duration<double> dt = t1 - t0;
-
-  using result_t = std::optional<std::pair<CU, std::list<int>>>;
-
-  result_t result;
-
-  if (op)
-    {
-      std::list<int> p;
-      for (const edge &e: op.value().second)
-        p.push_back(e2i[e]);
-      result = make_pair(op.value().first, p);
-    }
-
-  return std::pair<double, result_t>(dt.count(), std::move(result));
+  // Get and return the path.
+  return trace(S, dst, l, t);
 }
 
 #endif // SEARCH_HPP

@@ -1,4 +1,5 @@
 #include "search.hpp"
+#include "utils.hpp"
 
 #include <cassert>
 
@@ -53,22 +54,14 @@ main()
   boost::get(boost::edge_su, g, e3) = {CU(1, 5)};
   boost::get(boost::edge_su, g, e4) = {CU(1, 5)};
 
-  // // We search for a path from 0 to 3, with 1 unit for the most
-  // // efficient modulation.
-  // auto r = search(g, CU(0, 5), 0, 3, 1);
+  // We search for a path from 0 to 3, with 1 unit for the most
+  // efficient modulation.
+  auto r = search(g, CU(0, 5), 0, 3, 1);
 
-  // cout << "The search took " << r.first << " s\n";
-  // cout << "Solution found: ";
-    
-  // if (r.second)
-  //     {
-  //       const auto &path = r.second.value();
-  //       cout << "links: ";
-  //       for (int e: path.second)
-  //         cout << e << ", ";
-  //       cout << "units: (" << path.first.min() << ", "
-  //            << path.first.max() << ")\n";
-  //     }
-  // else
-  //   cout << "none\n";
+  cout << "Solution found: ";
+  if (r)
+    cout << r.value();
+  else
+    cout << "none";
+  cout << endl;
 }
