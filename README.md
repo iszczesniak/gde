@@ -13,4 +13,4 @@ implementation.
 If you want to get the whole simulator with the competing algorithms
 implemented, please go to:
 
-https://github.com/iszczesniak/gde
+https://github.com/iszczesniak/gd
