@@ -1,4 +1,4 @@
-#include "interface.hpp"
+#include "search.hpp"
 
 #include <cassert>
 
@@ -12,8 +12,9 @@ using namespace std;
 int
 main()
 {
-  // Report the length of the longest shortest path.
+  // Make sure we've got the modulation model right.
   using au = adaptive_units<COST>;
+  // Report the length of the longest shortest path.
   au::longest_reach(8);
   assert(au::units(1, 0) == 1);
   assert(au::units(1, 1) == 1);
@@ -27,45 +28,47 @@ main()
   assert(au::units(1, 9) == std::numeric_limits<int>::max());
 
   // The adjacency matrix of this graph, where (n) is node number n,
-  // and [c] is link cost c:
+  // and [c, CU] is link cost c and CU:
   //
-  // (0)---------[2]---------(2)---[2]---(3)
-  //  \                       /
-  //   \---[2]---(1)---[2]---/
+  // (0)-------------[2, (0, 3)]-------------(2)---[2, (1, 5)]---(3)
+  //  \                                       /
+  //   \---[2, (1, 5)]---(1)---[2, (1, 5)]---/
   //
-  std::vector<std::vector<COST>> G = {{0, 2, 2, 0},
-                                      {2, 0, 2, 0},
-                                      {2, 2, 0, 2},
-                                      {0, 0, 2, 0}};
+  graph g(4);
+  auto [e1, s1] = add_edge(0, 1, g);
+  auto [e2, s2] = add_edge(0, 2, g);
+  auto [e3, s3] = add_edge(1, 2, g);
+  auto [e4, s4] = add_edge(2, 3, g);
+  assert(s1 && s2 && s3 && s4);
 
-  // The availability matrix.  0 means the unit is available.
-  std::vector<std::vector<int>> M = {
-    {1, 0, 0, 0, 0}, // #0: link (0) -> (1)
-    {0, 0, 0, 1, 1}, // #1: link (0) -> (2)
-    {0, 0, 0, 0, 0}, // #2: link (1) -> (0)
-    {1, 0, 0, 0, 0}, // #3: link (1) -> (2)
-    {0, 0, 0, 0, 0}, // #4: link (2) -> (0)
-    {0, 0, 0, 0, 0}, // #5: link (2) -> (1)
-    {1, 0, 0, 0, 0}, // #6: link (2) -> (3)
-    {0, 0, 0, 0, 0}, // #7: link (3) -> (2)
-  };
+  // Set the edge lengths.
+  boost::get(boost::edge_weight, g, e1) = 2;
+  boost::get(boost::edge_weight, g, e2) = 2;
+  boost::get(boost::edge_weight, g, e3) = 2;
+  boost::get(boost::edge_weight, g, e4) = 2;
 
-  // We search for a path from 0 to 3, with 1 unit for the most
-  // efficient modulation.
-  auto r = interface(G, M, CU(0, 5), 0, 3, 1);
+  // Set the edge available units.
+  boost::get(boost::edge_su, g, e1) = {CU(1, 5)};
+  boost::get(boost::edge_su, g, e2) = {CU(0, 3)};
+  boost::get(boost::edge_su, g, e3) = {CU(1, 5)};
+  boost::get(boost::edge_su, g, e4) = {CU(1, 5)};
 
-  cout << "The search took " << r.first << " s\n";
-  cout << "Solution found: ";
+  // // We search for a path from 0 to 3, with 1 unit for the most
+  // // efficient modulation.
+  // auto r = search(g, CU(0, 5), 0, 3, 1);
+
+  // cout << "The search took " << r.first << " s\n";
+  // cout << "Solution found: ";
     
-  if (r.second)
-      {
-        const auto &path = r.second.value();
-        cout << "links: ";
-        for (int e: path.second)
-          cout << e << ", ";
-        cout << "units: (" << path.first.min() << ", "
-             << path.first.max() << ")\n";
-      }
-  else
-    cout << "none\n";
+  // if (r.second)
+  //     {
+  //       const auto &path = r.second.value();
+  //       cout << "links: ";
+  //       for (int e: path.second)
+  //         cout << e << ", ";
+  //       cout << "units: (" << path.first.min() << ", "
+  //            << path.first.max() << ")\n";
+  //     }
+  // else
+  //   cout << "none\n";
 }
