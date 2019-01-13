@@ -28,8 +28,8 @@ main()
   assert(au::units(1, 8) == 4);
   assert(au::units(1, 9) == std::numeric_limits<int>::max());
 
-  // The adjacency matrix of this graph, where (n) is node number n,
-  // and [c, CU] is link cost c and CU:
+  // The graph, where (n) is node number n, and [c, CU] is link cost c
+  // and contiguous units CU:
   //
   // (0)-------------[2, (0, 3)]-------------(2)---[2, (1, 5)]---(3)
   //  \                                       /
