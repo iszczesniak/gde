@@ -1,21 +1,23 @@
 language: cpp
 
+os: linux
+
+dist: trusty
+
 compiler:
  - gcc
  - clang
 
-# Boost
 addons:
   apt:
-    packages: libboost-all-dev
+   sources:
+    - ubuntu-toolchain-r-test
+    - llvm-toolchain-trusty
 
-before_install:
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo apt-get update -qq
-
-install:
-  - sudo apt-get install -qq g++-8 clang-8
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 90
+   packages:
+    - clang-9
+    - g++9
+    - libboost-all-dev
 
 script:
  - make
