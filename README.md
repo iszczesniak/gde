@@ -1,3 +1,5 @@
+https://travis-ci.org/iszczesniak/gde.svg?branch=master
+
 This is an example for the Generic Dijkstra algorithm, which was
 proposed in:
 
