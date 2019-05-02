@@ -5,9 +5,17 @@ compiler:
  - clang
 
 # Boost
-addons: 
-  apt: 
+addons:
+  apt:
     packages: libboost-all-dev
+
+before_install:
+  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+  - sudo apt-get update -qq
+
+install:
+  - sudo apt-get install -qq g++-8
+  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 90
 
 script:
  - make
