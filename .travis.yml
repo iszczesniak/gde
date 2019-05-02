@@ -4,3 +4,6 @@ compiler:
  - gcc
  - clang
 
+script:
+ - make
+ - ./example
