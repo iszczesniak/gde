@@ -1,9 +1,5 @@
 language: cpp
 
-compiler:
- - gcc
- - clang
-
 matrix:
   include:
     - compiler: gcc
@@ -14,7 +10,6 @@ matrix:
           packages:
             - g++-8
             - libboost-all-dev
-      env: CXX=g++-8
 
     - compiler: clang
       addons:
@@ -25,7 +20,6 @@ matrix:
           packages:
             - clang-9
             - libboost-all-dev
-      env: CXX=clang-9
 
 script:
  - make
