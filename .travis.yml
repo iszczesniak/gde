@@ -4,6 +4,11 @@ compiler:
  - gcc
  - clang
 
+# Boost
+addons: 
+  apt: 
+    packages: libboost-all-dev
+
 script:
  - make
  - ./example
