@@ -16,7 +16,7 @@ addons:
 
    packages:
     - clang-9
-    - g++9
+    - g++8
     - libboost-all-dev
 
 script:
