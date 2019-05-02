@@ -23,9 +23,9 @@ matrix:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty
           packages:
-            - clang-8
+            - clang-9
             - libboost-all-dev
-      env: CXX=clang-8
+      env: CXX=clang-9
 
 script:
  - make
