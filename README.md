@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/iszczesniak/gde.svg?branch=master)](https://travis-ci.org/iszczesniak/gde)
+
 This is an example for the Generic Dijkstra algorithm, which was
 proposed in:
 
