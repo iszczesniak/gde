@@ -1,22 +1,12 @@
 language: cpp
 
-os: linux
-
-dist: trusty
-
 compiler:
- - gcc
- - clang
+ - gcc-8
+ - clang-8
 
 addons:
   apt:
-   sources:
-    - ubuntu-toolchain-r-test
-    - llvm-toolchain-trusty
-
    packages:
-    - clang-9
-    - g++8
     - libboost-all-dev
 
 script:
