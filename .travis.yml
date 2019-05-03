@@ -13,17 +13,18 @@ matrix:
             - g++-8
             - libboost-graph-dev
 
-    - compiler: clang-8
+    - compiler: clang-9
       env:
-        - CXX_COMPILER=clang++-8
+        - CXX_COMPILER=clang++-9
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty
           packages:
-            - clang-8
+            - clang-9
             - libboost-graph-dev
+            - libstdc++8
 
 before_install:
   - export CXX=$CXX_COMPILER
