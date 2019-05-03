@@ -8,6 +8,7 @@
 #include "generic_solution.hpp"
 #include "generic_tracer.hpp"
 #include "graph.hpp"
+#include "units.hpp"
 
 #include <optional>
 
