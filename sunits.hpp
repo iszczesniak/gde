@@ -43,7 +43,7 @@ public:
   using base::end;
   using base::size;
   using base::empty;
-  using base::const_iterator;
+  using typename base::const_iterator;
 
   T
   count() const
