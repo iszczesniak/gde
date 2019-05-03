@@ -3,6 +3,8 @@ language: cpp
 matrix:
   include:
     - compiler: g++-8
+      env:
+        - CXX = g++-8
       addons:
         apt:
           sources:
@@ -11,10 +13,13 @@ matrix:
             - g++-8
             - libboost-all-dev
 
-    - compiler: clang
+    - compiler: clang-9
+      env:
+        - CXX = clang-9
       addons:
         apt:
           sources:
+            - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty
           packages:
             - clang-9
