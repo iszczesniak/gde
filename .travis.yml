@@ -4,7 +4,7 @@ matrix:
   include:
     - compiler: g++-8
       env:
-        - MATRIX_EVAL = "CXX=g++-8"
+        - CXX_COMPILER=g++-8
       addons:
         apt:
           sources:
@@ -15,7 +15,7 @@ matrix:
 
     - compiler: clang-9
       env:
-        - MATRIX_EVAL = "CXX=clang++-9"
+        - CXX_COMPILER=clang++-9
       addons:
         apt:
           sources:
@@ -24,6 +24,9 @@ matrix:
           packages:
             - clang-9
             - libboost-graph-dev
+
+before_install:
+  - export CXX=$CXX_COMPILER
 
 script:
  - make
