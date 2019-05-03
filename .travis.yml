@@ -2,7 +2,7 @@ language: cpp
 
 matrix:
   include:
-    - compiler: gcc
+    - compiler: g++-8
       addons:
         apt:
           sources:
@@ -15,7 +15,6 @@ matrix:
       addons:
         apt:
           sources:
-            - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty
           packages:
             - clang-9
