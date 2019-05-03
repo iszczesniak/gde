@@ -24,7 +24,7 @@ matrix:
           packages:
             - clang-9
             - libboost-graph-dev
-            - libstdc++-8
+            - libstdc++-8-dev
 
 before_install:
   - export CXX=$CXX_COMPILER
