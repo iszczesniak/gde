@@ -11,61 +11,66 @@ template <typename Cost>
 struct adaptive_units
 {
   // The maximal modulation level.
-  static constexpr int m_m_max = 4;
+  static constexpr int m_M = 4;
 
   // The distance divisor.
-  static constexpr int m_dist_div = 1 << m_m_max;
+  static constexpr int m_dist_div = 1 << m_M;
 
-  // The maximal reach of the m_m_max modulation level.
-  static Cost m_max_dist;
+  // The reach of the m = 1 modulation level.
+  static Cost m_reach_1;
 
-  // The maximal reach of the first modulation level.
-  static Cost m_min_dist;
+  // The reach of the m = M modulation level.
+  static Cost m_reach_M;
 
-  // The base_dist.
+  // The base_dist, needed to speed up our calculations.
   static Cost m_base_dist;
 
-  // Report the longest shortest path length.
+  // Report the reach for modulation with level m = 1.
   static void
-  longest_reach(Cost length)
+  set_reach_1(Cost length)
   {
-    m_max_dist = length;
-    m_base_dist = m_max_dist / m_dist_div;
-    m_min_dist = 2 * m_base_dist;
+    m_reach_1 = length;
+    m_base_dist = m_reach_1 / m_dist_div;
+    m_reach_M = 2 * m_base_dist;
   }
 
-  // The required number of units at cost dist, when at cost 0 the
-  // required number is min_units.
+  // The required number of units at cost dist, when the required
+  // number is ncu_M for modulation level m = M.
   static int
-  units(int min_units, Cost dist)
+  units(int ncu_M, Cost dist)
   {
+    assert(("Please call set_reach_1.", m_reach_1 != 0));
     assert(dist >= 0);
 
-    if (dist <= m_min_dist)
-      return min_units;
+    if (dist <= m_reach_M)
+      return ncu_M;
 
     // If the distance is above the threshold, return the highest
     // required number of units so that there is no path.
-    if (m_max_dist < dist)
+    if (m_reach_1 < dist)
       return std::numeric_limits<int>::max();
 
-    return std::ceil(min_units * std::log2(dist / m_base_dist));
+    return std::ceil(ncu_M * std::log2(dist / m_base_dist));
   }
 
+  // Returns the reach of the modulation that uses ncu units, while
+  // the modulation level m = M uses ncu_M units.
   static
   Cost
-  reach(int min_units, int units)
+  reach(int ncu_M, int ncu)
   {
-    double m = static_cast<double>(units) / min_units;
+    assert(("Please call set_reach_1.", m_base_dist != 0));
+    double m = static_cast<double>(ncu) / ncu_M;
     return m_base_dist * std::pow(2.0, m);
   }
 
+  // Produces a list of ncu's for all modulations.
   static std::set<int>
-  ncus(int min_units)
+  ncus(int ncu_M)
   {
     std::set<int> s;
 
-    for (int units = min_units; units <= m_m_max * min_units; ++units)
+    for (int units = ncu_M; units <= m_M * ncu_M; ++units)
       s.insert(units);
 
     return s;
@@ -73,10 +78,10 @@ struct adaptive_units
 };
 
 template <typename Cost>
-Cost adaptive_units<Cost>::m_max_dist;
+Cost adaptive_units<Cost>::m_reach_1;
 
 template <typename Cost>
-Cost adaptive_units<Cost>::m_min_dist;
+Cost adaptive_units<Cost>::m_reach_M;
 
 template <typename Cost>
 Cost adaptive_units<Cost>::m_base_dist;
