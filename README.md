@@ -15,4 +15,4 @@ implementation.
 If you want to get the whole simulator with the competing algorithms
 implemented, please go to:
 
-<../gd>
+<irkos.org/gd>
