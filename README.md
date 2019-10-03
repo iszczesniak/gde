@@ -1,18 +1,36 @@
-[![Build Status](https://travis-ci.org/iszczesniak/gde.svg?branch=master)](https://travis-ci.org/iszczesniak/gde)
+# The GD software
 
-This is an example for the Generic Dijkstra algorithm, which was
-proposed in:
+Implementation of the generic Dijkstra algorithm, which was proposed
+in:
 
 Ireneusz Szcześniak, Andrzej Jajszczyk, Bożena Woźna-Szcześniak,
-"Generic Dijkstra for Optical Networks", submitted for publication,
-October 10, 2018.
+"Generic Dijkstra for Optical Networks", Journal of Optical
+Communications and Networking, vol. 11, issue 11, pp. 568-577,
+November 2019
 
-The link to the article: <https://arxiv.org/abs/1810.04481>
+<https://doi.org/10.1364/JOCN.11.000568>
 
-This repository is the minimal example with the algorithm
-implementation.
+This repository has far more than just the algoritm implementation.
+It's the whole simulator with the competing algorithms implemented.
 
-If you want to get the whole simulator with the competing algorithms
-implemented, please go to:
+## Download
 
-<http://irkos.org/gd>
+You can download the implementation at:
+
+<http://github.com/iszczesniak/gd>
+
+Or you can use git:
+
+`git clone --recurse-submodules http://github.com/iszczesniak/gd.git`
+
+## A minimal project
+
+If you want to get a minimal example with the algorithm
+implementation, [please click here](../gde).
+
+## Author, Affiliation and License
+
+The software was written and is maintained by Ireneusz (Irek)
+Szcześniak, as part of the responsibilities at the [Częstochowa
+University of Technology](http://pcz.pl). This software is licensed
+under the Boost Software License 1.0.
