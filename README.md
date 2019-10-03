@@ -1,7 +1,9 @@
 [![Build Status](https://travis-ci.org/iszczesniak/gde.svg?branch=master)](https://travis-ci.org/iszczesniak/gde)
 
-This is an example for the Generic Dijkstra algorithm, which was
-proposed in:
+# The GDE software
+
+This is a minimal example for the Generic Dijkstra algorithm, which
+was proposed in:
 
 Ireneusz Szcześniak, Andrzej Jajszczyk, Bożena Woźna-Szcześniak,
 "Generic Dijkstra for Optical Networks", Journal of Optical
@@ -10,8 +12,7 @@ November 2019
 
 <https://doi.org/10.1364/JOCN.11.000568>
 
-This repository is the minimal example with the algorithm
-implementation.
+## Download
 
 You can download the implementation at:
 
@@ -27,7 +28,6 @@ If you want to get the full project with the competing algorithms
 implemented, please go to:
 
 <www.irkos.org/gd>
-
 
 ## Author, Affiliation and License
 
