@@ -27,7 +27,7 @@ Or you can use git:
 If you want to get the full project with the competing algorithms
 implemented, please go to:
 
-<www.irkos.org/gd>
+<http://www.irkos.org/gd>
 
 ## Author, Affiliation and License
 
