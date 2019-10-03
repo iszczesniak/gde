@@ -2,11 +2,11 @@
 
 # The GDE software
 
-This is a minimal example for the Generic Dijkstra algorithm, which
+This is a minimal example for the generic Dijkstra algorithm, which
 was proposed in:
 
 Ireneusz Szcześniak, Andrzej Jajszczyk, Bożena Woźna-Szcześniak,
-"Generic Dijkstra for Optical Networks", Journal of Optical
+"Generic Dijkstra for optical networks", Journal of Optical
 Communications and Networking, vol. 11, issue 11, pp. 568-577,
 November 2019
 
