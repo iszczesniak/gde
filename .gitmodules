@@ -1,0 +1,3 @@
+[submodule "dijkstra"]
+	path = dijkstra
+	url = git@github.com:iszczesniak/dijkstra
