@@ -4,7 +4,6 @@
 #include <cassert>
 #include <cmath>
 #include <limits>
-#include <iostream>
 #include <set>
 
 template <typename Cost>

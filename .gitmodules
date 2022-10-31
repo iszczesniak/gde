@@ -1,3 +1,12 @@
 [submodule "dijkstra"]
 	path = dijkstra
 	url = git@github.com:iszczesniak/dijkstra
+[submodule "graph"]
+	path = graph
+	url = git@github.com:iszczesniak/graph1
+[submodule "generic_dijkstra"]
+	path = generic_dijkstra
+	url = git@github.com:iszczesniak/generic_dijkstra
+[submodule "units"]
+	path = units
+	url = git@github.com:iszczesniak/units
