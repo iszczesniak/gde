@@ -2,7 +2,7 @@
 #define SEARCH_HPP
 
 #include "adaptive_units.hpp"
-#include "generic_dijkstra.hpp"
+#include "dijkstra.hpp"
 #include "generic_label_creator.hpp"
 #include "generic_label.hpp"
 #include "generic_solution.hpp"
