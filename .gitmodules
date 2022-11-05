@@ -7,3 +7,6 @@
 [submodule "units"]
 	path = units
 	url = git@github.com:iszczesniak/units
+[submodule "graph"]
+	path = graph
+	url = git@github.com:iszczesniak/graph2
