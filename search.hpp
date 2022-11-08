@@ -5,33 +5,36 @@
 #include "dijkstra.hpp"
 #include "generic_label_creator.hpp"
 #include "generic_label.hpp"
-#include "generic_solution.hpp"
+#include "generic_permanent.hpp"
+#include "generic_tentative.hpp"
 #include "generic_tracer.hpp"
 #include "graph.hpp"
 #include "units.hpp"
 
 #include <optional>
 
-template <typename G>
+template <typename Graph>
 auto
-search(const G &g, CU cu, int src, int dst, int ncu)
+search(const Graph &g, CU cu, int ncu,
+       const Vertex<Graph> &src, const Vertex<Graph> &dst)
 {
   assert(ncu > 0);
   assert(src != dst);
 
-  // The maximal length of a path.  We don't set it, so it's
-  // unlimited.
-  static std::optional<COST> ml;
-
-  // The solution type.
-  typedef generic_solution<graph, COST, CU> sol_type;
+  using weight_type = Weight<Edge<Graph>>;
+  using label_type = generic_label<weight_type, CU>;
 
   // The permanent and tentative solutions.
-  sol_type S, Q;
-  // The label we start the search with.
-  generic_label<graph, COST, CU> l(0, std::move(cu), edge(), src);
+  generic_permanent<weight_type, CU> P(num_vertexes(g));
+  generic_tentative<weight_type, CU> T(num_vertexes(g));
+
+  // That's a null edge that is not a part of the graph.
+  Edge<Graph> null_edge(src, src);
+
+  // The initial label we start the search with.
+  label l(0, std::move(cu), null_edge);
   // The creator of the labels.
-  generic_label_creator<graph, COST, CU> c(g, ncu, ml);
+  generic_label_creator<graph, COST, CU> c(g, ncu);
   // Run the search.
   dijkstra(g, S, Q, l, c, dst);
   // The tracer.

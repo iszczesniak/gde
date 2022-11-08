@@ -3,7 +3,7 @@
 
 #include "adaptive_units.hpp"
 #include "generic_label.hpp"
-#include "graph.hpp"
+#include "units.hpp"
 
 #include <list>
 #include <optional>
@@ -19,7 +19,7 @@ get_resources(const Label &);
 template <typename Weight, typename Units>
 class generic_label_creator
 {
-  using Label = generic_label<Weight, Units>;
+  using label_type = generic_label<Weight, Units>;
 
   // The number of contiguous units initially requested for a demand.
   int m_ncu;
@@ -35,8 +35,9 @@ public:
   {
   }
 
-  std::list<Label>
-  operator()(const Edge<Graph> &e, const Label &l) const
+  template <typename Edge>
+  std::list<label_type>
+  operator()(const Edge &e, const label_type &l) const
   {
     // Candidate weight.
     Weight c_c = get_weight(l) + get_weight(e);
@@ -49,17 +50,17 @@ public:
         // The label units.
         const Units &l_units = get_resources(l);
         // The units available on the edge.
-        const auto &e_su = get_units(e);
+        const auto &e_su = get_resources(e);
         // The candidate SU: the su of label l that can be carried by
         // edge e, and that has at least ncu contiguous units.
         auto c_su = intersection(SU{l_units}, e_su);
         c_su.remove(adaptive_units<Weight>::units(m_ncu, c_c));
 
-	std::list<Label> l;
+	std::list<label_type> l;
 
 	for (auto &cu: c_su)
 	  // The candidate label.
-	  l.push_back(Label(c_c, std::move(cu)));
+	  l.push_back(label_type(c_c, std::move(cu)));
 
 	return l;
       }
