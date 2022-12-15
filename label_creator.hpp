@@ -1,43 +1,30 @@
-#ifndef GENERAL_LABEL_CREATOR_HPP
-#define GENERAL_LABEL_CREATOR_HPP
+#ifndef LABEL_CREATOR_HPP
+#define LABEL_CREATOR_HPP
 
 #include "adaptive_units.hpp"
 #include "generic_label.hpp"
+#include "generic_label_creator.hpp"
 #include "units.hpp"
 
 #include <list>
 #include <optional>
 
-template <typename Label>
-const auto &
-get_weight(const Label &);
-
-template <typename Label>
-const auto &
-get_resources(const Label &);
-
-template <typename Weight, typename Units>
-class generic_label_creator
+template <typename Weight>
+class label_creator: generic_label_creator
 {
   using label_type = generic_label<Weight, Units>;
 
   // The number of contiguous units initially requested for a demand.
-  int m_ncu;
-
-  // The optional maximal length.
-  std::optional<Weight> m_ml;
+  unsigned m_ncu;
 
 public:
-  generic_label_creator(int ncu,
-                        const std::optional<Weight>
-                        &ml = std::optional<Weight>()):
-    m_ncu(ncu), m_ml(ml)
+  label_creator(int ncu): m_ncu(ncu)
   {
   }
 
-  template <typename Edge>
+  template <typename Label, typename Edge>
   std::list<label_type>
-  operator()(const Edge &e, const label_type &l) const
+  operator()(const Label &l, const Edge &e) const
   {
     // Candidate weight.
     Weight c_c = get_weight(l) + get_weight(e);
@@ -70,4 +57,4 @@ public:
   }
 };
 
-#endif // GENERAL_LABEL_CREATOR_HPP
+#endif // LABEL_CREATOR_HPP
