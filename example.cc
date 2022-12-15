@@ -1,11 +1,10 @@
+#include "graph.hpp"
 #include "search.hpp"
 #include "utils.hpp"
 
 #include <cassert>
 
 using namespace std;
-
-// Type COST is defined in graph.hpp.  Feel free to change it there.
 
 // In this example we request 1 unit, and set the reach of the least
 // spectrum-efficient modulation to 8.
