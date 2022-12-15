@@ -38,13 +38,15 @@ struct label_creator
     // edge e, and that has at least ncu contiguous units.
     auto c_su = intersection(SU{l_units}, e_su);
     // Remove the slots that have too few units.
-    c_su.remove(adaptive_units::units(m_ncu, c_w));
+    c_su.remove(adaptive_units<decltype(c_w)>::units(m_ncu, c_w));
 
-    std::list<Label> l;
+    std::list<Label> ret;
 
     for (auto &cu: c_su)
       // The candidate label.
-      l.push_back(label_type(c_w, std::move(cu)));
+      ret.push_back(Label(e, c_w, std::move(cu)));
+
+    return ret;
   }
 };
 

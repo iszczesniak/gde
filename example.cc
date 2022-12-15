@@ -1,6 +1,6 @@
 #include "adaptive_units.hpp"
-#include "graph.hpp"
-//#include "search.hpp"
+#include "graph_type.hpp"
+#include "search.hpp"
 #include "units.hpp"
 #include "utils.hpp"
 
@@ -59,12 +59,12 @@ main()
   // We search for a path from 0 to 3, with 1 unit for the most
   // efficient modulation.
 
-  // auto r = search(g, CU(0, 5), 0, 3, 1);
+  auto r = search(g, CU(0, 5), 0, 3, 1);
 
-  // cout << "Solution found: ";
-  // if (r)
-  //   cout << r.value();
-  // else
-  //   cout << "none";
-  // cout << endl;
+  cout << "Solution found: ";
+  if (r)
+    cout << r.value();
+  else
+    cout << "none";
+  cout << endl;
 }

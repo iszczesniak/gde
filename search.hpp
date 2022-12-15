@@ -1,46 +1,37 @@
 #ifndef SEARCH_HPP
 #define SEARCH_HPP
 
-#include "adaptive_units.hpp"
 #include "dijkstra.hpp"
-#include "generic_label_creator.hpp"
 #include "generic_label.hpp"
 #include "generic_permanent.hpp"
 #include "generic_tentative.hpp"
 #include "generic_tracer.hpp"
-#include "graph.hpp"
+#include "graph_type.hpp"
+#include "label_creator.hpp"
+#include "label_robe.hpp"
 #include "units.hpp"
 
-#include <optional>
-
-template <typename Graph>
+template <typename Graph, typename Vertex>
 auto
-search(const Graph &g, CU cu, int ncu,
-       const Vertex<Graph> &src, const Vertex<Graph> &dst)
+search(const Graph &g, CU cu, unsigned ncu,
+       const Vertex &src, const Vertex &dst)
 {
   assert(ncu > 0);
-  assert(src != dst);
 
-  using weight_type = Weight<Edge<Graph>>;
-  using label_type = generic_label<weight_type, CU>;
+  // The null edge that is not part of the graph.
+  edge_type null_edge(src, src, 0, SU{});
+  // The label type, and the initial label.
+  using robe_type = label_robe<edge_type,
+                               generic_label<unsigned, CU>>;
+  robe_type initial(null_edge, 0, cu);
 
   // The permanent and tentative solutions.
-  generic_permanent<weight_type, CU> P(num_vertexes(g));
-  generic_tentative<weight_type, CU> T(num_vertexes(g));
-
-  // That's a null edge that is not a part of the graph.
-  Edge<Graph> null_edge(src, src);
-
-  // The initial label we start the search with.
-  label l(0, std::move(cu), null_edge);
-  // The creator of the labels.
-  generic_label_creator<graph, COST, CU> c(g, ncu);
+  generic_permanent<robe_type> P(num_vertexes(g));
+  generic_tentative<robe_type> T(num_vertexes(g));
   // Run the search.
-  dijkstra(g, S, Q, l, c, dst);
-  // The tracer.
-  generic_tracer<graph, cupath, sol_type, CU> t(g, ncu);
+  dijkstra(initial, P, T, label_creator(ncu));
   // Get and return the path.
-  return trace(S, dst, l, t);
+  return trace(initial, dst, generic_tracer(P));
 }
 
 #endif // SEARCH_HPP
