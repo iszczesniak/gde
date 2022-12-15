@@ -1,3 +1,5 @@
+all: example
+
 CXXFLAGS = -std=c++20
 
 CXXFLAGS := $(CXXFLAGS) -I dijkstra
@@ -5,4 +7,13 @@ CXXFLAGS := $(CXXFLAGS) -I generic_dijkstra
 CXXFLAGS := $(CXXFLAGS) -I graph
 CXXFLAGS := $(CXXFLAGS) -I units
 
-all: example
+# Use the C++ linker
+LINK.o = $(LINK.cc)
+
+count:
+	wc -l *.hpp *.cc
+
+depend:
+	g++ -MM $(CXXFLAGS) *.cc > dependencies
+
+include dependencies

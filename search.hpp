@@ -13,16 +13,17 @@
 
 template <typename Graph, typename Vertex>
 auto
-search(const Graph &g, CU cu, unsigned ncu,
-       const Vertex &src, const Vertex &dst)
+search(const Graph &g, const Vertex &src, const Vertex &dst,
+       unsigned ncu, CU cu)
 {
   assert(ncu > 0);
 
   // The null edge that is not part of the graph.
   edge_type null_edge(src, src, 0, SU{});
-  // The label type, and the initial label.
+  // The label type.
   using robe_type = label_robe<edge_type,
                                generic_label<unsigned, CU>>;
+  // The initial label.
   robe_type initial(null_edge, 0, cu);
 
   // The permanent and tentative solutions.
