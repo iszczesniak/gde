@@ -6,7 +6,7 @@
 #include <limits>
 #include <set>
 
-template <typename Cost>
+template <typename Weight>
 struct adaptive_units
 {
   // The maximal modulation level.
@@ -16,27 +16,27 @@ struct adaptive_units
   static constexpr int m_dist_div = 1 << m_M;
 
   // The reach of the m = 1 modulation level.
-  static Cost m_reach_1;
+  static Weight m_reach_1;
 
   // The reach of the m = M modulation level.
-  static Cost m_reach_M;
+  static Weight m_reach_M;
 
   // The base_dist, needed to speed up our calculations.
-  static Cost m_base_dist;
+  static Weight m_base_dist;
 
   // Report the reach for modulation with level m = 1.
   static void
-  set_reach_1(Cost length)
+  set_reach_1(Weight length)
   {
     m_reach_1 = length;
     m_base_dist = m_reach_1 / m_dist_div;
     m_reach_M = 2 * m_base_dist;
   }
 
-  // The required number of units at cost dist, when the required
+  // The required number of units at weight dist, when the required
   // number is ncu_M for modulation level m = M.
   static int
-  units(int ncu_M, Cost dist)
+  units(int ncu_M, Weight dist)
   {
     assert(("Please call set_reach_1.", m_reach_1 != 0));
     assert(dist >= 0);
@@ -55,7 +55,7 @@ struct adaptive_units
   // Returns the reach of the modulation that uses ncu units, while
   // the modulation level m = M uses ncu_M units.
   static
-  Cost
+  Weight
   reach(int ncu_M, int ncu)
   {
     assert(("Please call set_reach_1.", m_base_dist != 0));
@@ -76,13 +76,13 @@ struct adaptive_units
   }
 };
 
-template <typename Cost>
-Cost adaptive_units<Cost>::m_reach_1;
+template <typename Weight>
+Weight adaptive_units<Weight>::m_reach_1;
 
-template <typename Cost>
-Cost adaptive_units<Cost>::m_reach_M;
+template <typename Weight>
+Weight adaptive_units<Weight>::m_reach_M;
 
-template <typename Cost>
-Cost adaptive_units<Cost>::m_base_dist;
+template <typename Weight>
+Weight adaptive_units<Weight>::m_base_dist;
 
 #endif // ADAPTIVE_UNITS_HPP
