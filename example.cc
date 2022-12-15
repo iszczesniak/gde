@@ -1,10 +1,21 @@
+#include "adaptive_units.hpp"
 #include "graph.hpp"
-#include "search.hpp"
+//#include "search.hpp"
+#include "units.hpp"
 #include "utils.hpp"
 
 #include <cassert>
 
 using namespace std;
+
+template <typename Edge>
+using vertex_type_tmp = vertex<Edge, index<unsigned>,
+                               name<std::string>>;
+
+using edge_type = edge<vertex_type_tmp, weight<unsigned>,
+                       resources<SU>>;
+using vertex_type = vertex_type_tmp<edge_type>;
+using graph_type = graph<vertex_type>;
 
 // In this example we request 1 unit, and set the reach of the least
 // spectrum-efficient modulation to 8.
@@ -13,7 +24,7 @@ int
 main()
 {
   // Make sure we've got the modulation model right.
-  using au = adaptive_units<COST>;
+  using au = adaptive_units<unsigned>;
   // Set the maximal reach of the spectrally-worse (m = 1) modulation.
   au::set_reach_1(8);
   assert(au::units(1, 0) == 1);
@@ -34,33 +45,26 @@ main()
   //  \                                       /
   //   \---[2, (1, 5)]---(1)---[2, (1, 5)]---/
   //
-  graph g(4);
-  auto [e1, s1] = add_edge(0, 1, g);
-  auto [e2, s2] = add_edge(0, 2, g);
-  auto [e3, s3] = add_edge(1, 2, g);
-  auto [e4, s4] = add_edge(2, 3, g);
-  assert(s1 && s2 && s3 && s4);
+  graph_type g(4);
+  auto &v0 = add_vertex(g, "v0");
+  auto &v1 = add_vertex(g, "v1");
+  auto &v2 = add_vertex(g, "v2");
+  auto &v3 = add_vertex(g, "v3");
 
-  // Set the edge lengths.
-  boost::get(boost::edge_weight, g, e1) = 2;
-  boost::get(boost::edge_weight, g, e2) = 2;
-  boost::get(boost::edge_weight, g, e3) = 2;
-  boost::get(boost::edge_weight, g, e4) = 2;
-
-  // Set the edge available units.
-  boost::get(boost::edge_su, g, e1) = {CU(1, 5)};
-  boost::get(boost::edge_su, g, e2) = {CU(0, 3)};
-  boost::get(boost::edge_su, g, e3) = {CU(1, 5)};
-  boost::get(boost::edge_su, g, e4) = {CU(1, 5)};
+  add_edge(v0, v1, 2, SU{{1, 5}});
+  add_edge(v0, v2, 2, SU{{0, 3}});
+  add_edge(v1, v2, 2, SU{{1, 5}});
+  add_edge(v2, v3, 2, SU{{1, 5}});
 
   // We search for a path from 0 to 3, with 1 unit for the most
   // efficient modulation.
-  auto r = search(g, CU(0, 5), 0, 3, 1);
 
-  cout << "Solution found: ";
-  if (r)
-    cout << r.value();
-  else
-    cout << "none";
-  cout << endl;
+  // auto r = search(g, CU(0, 5), 0, 3, 1);
+
+  // cout << "Solution found: ";
+  // if (r)
+  //   cout << r.value();
+  // else
+  //   cout << "none";
+  // cout << endl;
 }
