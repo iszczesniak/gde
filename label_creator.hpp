@@ -14,6 +14,7 @@
 // functor that would remove the unwanted slots, but such
 // customization would be too specific, rather unfit to other uses.
 // So it's best just to implement this struct.
+template <typename Weight>
 struct label_creator
 {
   // The number of contiguous units initially requested for a demand.
@@ -38,7 +39,7 @@ struct label_creator
     // edge e, and that has at least ncu contiguous units.
     auto c_su = intersection(SU{l_units}, e_su);
     // Remove the slots that have too few units.
-    c_su.remove(adaptive_units<decltype(c_w)>::units(m_ncu, c_w));
+    c_su.remove(adaptive_units<Weight>::units(m_ncu, c_w));
 
     std::list<Label> ret;
 

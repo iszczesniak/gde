@@ -30,7 +30,7 @@ search(const Graph &g, const Vertex &src, const Vertex &dst,
   generic_permanent<robe_type> P(num_vertexes(g));
   generic_tentative<robe_type> T(num_vertexes(g));
   // Run the search.
-  dijkstra(initial, P, T, label_creator(ncu));
+  dijkstra(initial, P, T, label_creator<double>(ncu));
   // Get and return the path.
   return trace(initial, dst, generic_tracer(P));
 }
