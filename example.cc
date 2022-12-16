@@ -31,12 +31,12 @@ units()
 void
 test1()
 {
-  // The graph, where (n) is node number n, and [c, CU] is link cost c
+  // The graph, where (n) is node number n, and (c, CU) is link cost c
   // and contiguous units CU:
   //
-  // (0)-------------[2, (0, 3)]-------------(2)---[2, (1, 5)]---(3)
+  // (0)-------------(2, [0, 3))-------------(2)---(2, [1, 5))---(3)
   //  \                                       /
-  //   \---[2, (1, 5)]---(1)---[2, (1, 5)]---/
+  //   \---(2, [1, 5))---(1)---(2, [1, 5))---/
   //
   graph_type g(4);
   auto &v0 = add_vertex(g, "v0");
@@ -60,35 +60,43 @@ test1()
 void
 failing_example()
 {
-  // The graph, where (n) is node number n, and [c, CU] is link cost c
+  // The graph, where (n) is node number n, and (c, CU) is link cost c
   // and contiguous units CU:
   //
-  //              (1)
-  //             / |
-  //            /  |
-  //   (1, [0, 1]) |
-  //          /    |
-  //        (0)  (0, [0, 2])
-  //          \    |
-  //   (1, [0, 2]) |
-  //            \  |
-  //             \ |
-  //              (2)
+  //                 (t)
+  //                /  |
+  //               /   |
+  //              /    |
+  //   e1, (1, [0, 1)) |
+  //            /      |
+  //          (s)  e3, (0, [0, 2))
+  //            \      |
+  //   e2, (1, [0, 2)) |
+  //              \    |
+  //               \   |
+  //                \  |
+  //                 (u)
   graph_type g(3);
-  auto &v0 = add_vertex(g, "v0");
-  auto &v1 = add_vertex(g, "v1");
-  auto &v2 = add_vertex(g, "v2");
+  auto &s = add_vertex(g, "s");
+  auto &t = add_vertex(g, "t");
+  auto &u = add_vertex(g, "u");
 
-  add_edge(v0, v1, 1, SU{{0, 1}});
-  add_edge(v0, v2, 1, SU{{0, 2}});
-  add_edge(v2, v1, 0, SU{{0, 2}});
+  add_edge(s, t, 1, SU{{0, 1}});
+  add_edge(s, u, 1, SU{{0, 2}});
+  add_edge(u, t, 0, SU{{0, 2}});
+
+  auto &e1 = get_edges(s)[0];
+  auto &e2 = get_edges(s)[1];
+  auto &e3 = get_edges(u)[0];
 
   // We search for a path from 0 to 3, with 1 unit for the most
   // efficient modulation.
-  auto r = search(g, v0, v1, 1, CU(0, 5));
-
+  auto r = search(g, s, t, 1, CU(0, 5));
   assert(r);
-  auto path = r.value();  
+  auto path = r.value();
+  assert(path.size() == 2);
+  assert(get_edge(path[0]) == e2);
+  assert(get_edge(path[1]) == e3);
 }
 
 int
@@ -97,7 +105,7 @@ main()
   // Set the maximal reach of the spectrally-worse (m = 1) modulation.
   au::set_reach_1(8);
 
-  // units();
+  units();
   test1();
   failing_example();
 }

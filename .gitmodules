@@ -10,3 +10,6 @@
 [submodule "graph"]
 	path = graph
 	url = https://github.com/iszczesniak/graph2
+[submodule "props"]
+	path = props
+	url = https://github.com/iszczesniak/props

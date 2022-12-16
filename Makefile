@@ -5,6 +5,7 @@ CXXFLAGS = -std=c++20
 CXXFLAGS := $(CXXFLAGS) -I dijkstra
 CXXFLAGS := $(CXXFLAGS) -I generic_dijkstra
 CXXFLAGS := $(CXXFLAGS) -I graph
+CXXFLAGS := $(CXXFLAGS) -I props
 CXXFLAGS := $(CXXFLAGS) -I units
 
 # Use the C++ linker

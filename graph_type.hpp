@@ -2,6 +2,7 @@
 #define GRAPH_TYPE_HPP
 
 #include "graph.hpp"
+#include "props.hpp"
 #include "units.hpp"
 
 template <typename Edge>
