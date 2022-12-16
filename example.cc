@@ -8,7 +8,7 @@
 
 using namespace std;
 
-using au = adaptive_units<unsigned>;
+using au = adaptive_units<double>;
 
 // Make sure we've got the modulation model right.
 void
