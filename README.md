@@ -12,6 +12,13 @@ November 2019
 
 <https://doi.org/10.1364/JOCN.11.000568>
 
+This implementation has the bug fix proposed in:
+
+Ireneusz Szcześniak, Bożena Woźna-Szcześniak, "Generic Dijkstra:
+correctness and tractability"
+
+<https://arxiv.org/abs/2204.13547>
+
 ## Download
 
 You can download the implementation at:
