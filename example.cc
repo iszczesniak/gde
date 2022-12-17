@@ -31,51 +31,59 @@ units()
 void
 test1()
 {
-  // The graph, where (n) is node number n, and (c, CU) is link cost c
-  // and contiguous units CU:
+  // In link label (c, CU), c is cost, and CU is contiguous units.
   //
-  // (0)-------------(2, [0, 3))-------------(2)---(2, [1, 5))---(3)
+  // (a)-----------e1, (2, [0, 3))------------(b)-e3, (2, [1, 5))-(c)
   //  \                                       /
-  //   \---(2, [1, 5))---(1)---(2, [1, 5))---/
-  //
-  graph_type g(4);
-  auto &v0 = add_vertex(g, "v0");
-  auto &v1 = add_vertex(g, "v1");
-  auto &v2 = add_vertex(g, "v2");
-  auto &v3 = add_vertex(g, "v3");
+  //   \-e2, (2, [1, 5))-(d)-e4, (2, [1, 5))-/
 
-  add_edge(v0, v1, 2, SU{{1, 5}});
-  add_edge(v0, v2, 2, SU{{0, 3}});
-  add_edge(v1, v2, 2, SU{{1, 5}});
-  add_edge(v2, v3, 2, SU{{1, 5}});
+  graph_type g(4);
+  auto &a = add_vertex(g, "a");
+  auto &b = add_vertex(g, "b");
+  auto &c = add_vertex(g, "c");
+  auto &d = add_vertex(g, "d");
+
+  add_edge(a, b, 2, SU{{0, 3}});
+  add_edge(a, d, 2, SU{{1, 5}});
+  add_edge(b, c, 2, SU{{1, 5}});
+  add_edge(d, b, 2, SU{{1, 5}});
+
+  auto &e1 = get_edges(a)[0];
+  auto &e2 = get_edges(a)[1];
+  auto &e3 = get_edges(b)[0];
+  auto &e4 = get_edges(d)[0];
 
   // We search for a path from 0 to 3, with 1 unit for the most
   // efficient modulation.
-  auto r = search(g, v0, v3, 1, CU(0, 5));
+  auto r = search(g, a, c, 1, CU(0, 5));
   assert(r);
   auto path = r.value();
+  assert(path.size() == 3);
+  assert(get_edge(path[0]) == e2);
+  assert(get_edge(path[1]) == e4);
+  assert(get_edge(path[2]) == e3);
 }
 
 // The failing example.
 void
 failing_example()
 {
-  // The graph, where (n) is node number n, and (c, CU) is link cost c
-  // and contiguous units CU:
+  // In link label (c, CU), c is cost, and CU is contiguous units.
   //
-  //                 (t)
-  //                /  |
-  //               /   |
-  //              /    |
-  //   e1, (1, [0, 1)) |
-  //            /      |
-  //          (s)  e3, (0, [0, 2))
-  //            \      |
-  //   e2, (1, [0, 2)) |
-  //              \    |
-  //               \   |
-  //                \  |
-  //                 (u)
+  //               (t)
+  //              /  |
+  //             /   |
+  //            /    |
+  // e1, (1, [0, 1)) |
+  //          /      |
+  //        (s)  e3, (0, [0, 2))
+  //          \      |
+  // e2, (1, [0, 2)) |
+  //            \    |
+  //             \   |
+  //              \  |
+  //               (u)
+
   graph_type g(3);
   auto &s = add_vertex(g, "s");
   auto &t = add_vertex(g, "t");
