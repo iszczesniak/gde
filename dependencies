@@ -1,8 +1,8 @@
 example.o: example.cc adaptive_units.hpp graph_type.hpp graph/graph.hpp \
- graph/graph_interface.hpp units/units.hpp units/cunits.hpp \
- units/sunits.hpp search.hpp dijkstra/dijkstra.hpp \
+ graph/graph_interface.hpp props/props.hpp units/units.hpp \
+ units/cunits.hpp units/sunits.hpp search.hpp dijkstra/dijkstra.hpp \
  graph/graph_interface.hpp generic_dijkstra/generic_label.hpp \
- props/props.hpp generic_dijkstra/generic_permanent.hpp \
+ generic_dijkstra/generic_permanent.hpp \
  generic_dijkstra/generic_tentative.hpp \
  generic_dijkstra/generic_tracer.hpp label_creator.hpp \
- dijkstra/label_robe.hpp utils.hpp
+ dijkstra/label_robe.hpp

@@ -2,7 +2,6 @@
 #include "graph_type.hpp"
 #include "search.hpp"
 #include "units.hpp"
-#include "utils.hpp"
 
 #include <cassert>
 
