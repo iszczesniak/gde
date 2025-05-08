@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/iszczesniak/gde.svg?branch=master)](https://travis-ci.org/iszczesniak/gde)
-
 # The GDE software
 
 This is a minimal example for the generic Dijkstra algorithm, which
