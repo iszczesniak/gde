@@ -1,13 +1,7 @@
-PROG = gde
-SRCS = gde.cc
-MAN =
-
-# CXX = clang++-17
-
 # CXXFLAGS += -O3
 # CXXFLAGS += -O3 -D NDEBUG
 
-CXXFLAGS += -std=c++2b
+CXXFLAGS += -std=c++23
 CXXFLAGS += -I .
 CXXFLAGS += -I dijkstra
 CXXFLAGS += -I generic_dijkstra
@@ -16,8 +10,11 @@ CXXFLAGS += -I props
 CXXFLAGS += -I units
 CXXFLAGS += -I /usr/local/include
 
-LDFLAGS += -L /usr/local/lib
-LDFLAGS += -l boost_graph
-LDFLAGS += -l boost_program_options
+LDLIBS += -L /usr/local/lib
+LDLIBS += -l boost_graph
+LDLIBS += -l boost_program_options
 
-.include <bsd.prog.mk>
+# Use the C++ linker
+LINK.o = $(LINK.cc)
+
+all: gde

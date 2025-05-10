@@ -3,9 +3,9 @@
 
 #include "dijkstra.hpp"
 #include "generic_label.hpp"
+#include "generic_path_range.hpp"
 #include "generic_permanent.hpp"
 #include "generic_tentative.hpp"
-#include "generic_tracer.hpp"
 #include "graph_type.hpp"
 #include "label_creator.hpp"
 #include "label_robe.hpp"
@@ -24,15 +24,20 @@ search(const Graph &g, const Vertex &src, const Vertex &dst,
   using robe_type = label_robe<edge_type,
                                generic_label<unsigned, CU>>;
   // The initial label.
-  robe_type initial(null_edge, 0, cu);
+  robe_type init(null_edge, 0, cu);
 
   // The permanent and tentative solutions.
   generic_permanent<robe_type> P(num_vertexes(g));
   generic_tentative<robe_type> T(num_vertexes(g));
+  // Label creator.
+  label_creator<double> f(ncu);
   // Run the search.
-  dijkstra(initial, P, T, label_creator<double>(ncu));
-  // Get and return the path.
-  return trace(initial, dst, generic_tracer(P));
+  dijkstra(init, P, T, f, dst);
+
+  // The type of the path range.
+  using range_type = generic_path_range<decltype(P), decltype(f)>;
+  // Return the path labels.
+  return trace<range_type>(P, f, dst, init);
 }
 
 #endif // SEARCH_HPP

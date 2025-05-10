@@ -38,7 +38,8 @@ struct adaptive_units
   static int
   units(int ncu_M, Weight dist)
   {
-    assert(("Please call set_reach_1.", m_reach_1 != 0));
+    // Make sure that set_reach_1 was called.
+    assert(m_reach_1 != 0);
     assert(dist >= 0);
 
     if (dist <= m_reach_M)

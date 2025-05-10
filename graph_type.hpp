@@ -6,7 +6,7 @@
 #include "units.hpp"
 
 template <typename Edge>
-using vertex_type_tmp = vertex<Edge, index<unsigned>,
+using vertex_type_tmp = vertex<Edge, key<unsigned>,
                                name<std::string>>;
 
 using edge_type = edge<vertex_type_tmp, weight<unsigned>,

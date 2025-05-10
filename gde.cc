@@ -1,4 +1,5 @@
 #include "adaptive_units.hpp"
+#include "generic_path_range.hpp"
 #include "graph_type.hpp"
 #include "search.hpp"
 #include "units.hpp"
@@ -58,9 +59,9 @@ test1()
   assert(r);
   auto path = r.value();
   assert(path.size() == 3);
-  assert(get_edge(path[0]) == e2);
-  assert(get_edge(path[1]) == e4);
-  assert(get_edge(path[2]) == e3);
+  assert(get_edge(path.front()) == e2);
+  assert(get_edge(*++path.begin()) == e4);
+  assert(get_edge(*++++path.begin()) == e3);
 }
 
 // The failing example.
@@ -102,8 +103,8 @@ failing_example()
   assert(r);
   auto path = r.value();
   assert(path.size() == 2);
-  assert(get_edge(path[0]) == e2);
-  assert(get_edge(path[1]) == e3);
+  assert(get_edge(path.front()) == e2);
+  assert(get_edge(*++path.begin()) == e3);
 }
 
 int
