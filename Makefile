@@ -2,12 +2,12 @@ PROG = gde
 SRCS = gde.cc
 MAN =
 
-# CXX = clang++-17
+CXX = clang++-19
 
 # CXXFLAGS += -O3
 # CXXFLAGS += -O3 -D NDEBUG
 
-CXXFLAGS += -std=c++2b
+CXXFLAGS += -std=c++2c
 CXXFLAGS += -I .
 CXXFLAGS += -I dijkstra
 CXXFLAGS += -I generic_dijkstra
